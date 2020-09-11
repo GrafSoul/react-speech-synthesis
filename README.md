@@ -1,2 +1,27 @@
-# react-speech-synthesis
-A simple application for React.js for speech synthesis
+# Text Reader
+
+Simple app for speech synthesis using 'React.js' and Speech Synthesis API
+
+## Run for start development version
+
+```
+git clone https://github.com/GrafSoul/react-speech-synthesis.git
+cd react-speech-synthesis
+npm install
+npm start
+// or
+yarn install
+yarn start
+```
+
+## Run for build a pre-release production app.
+
+```
+npm build
+// or
+yarn build
+```
+
+&#169; 2020 | Text Reader | [MIT licensed].
+
+[mit licensed]: https://github.com/GrafSoul/react-speech-synthesis/blob/master/LICENSE
