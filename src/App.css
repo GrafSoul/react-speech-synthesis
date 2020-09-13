@@ -10,10 +10,15 @@ body {
   align-items: center;
 }
 
+.content-wrap {
+  padding: 20px;
+}
+
 .jumbotron {
   margin: auto;
   padding-top: 25px;
   padding-bottom: 25px;
+
   box-shadow: 1px 1px 12px rgba(0, 0, 0, 0.5);
 }
 
