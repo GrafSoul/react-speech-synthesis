@@ -17,25 +17,15 @@ import classes from './TextReader.module.css';
 const TextReader = () => {
     const compatibility = useRef(true);
     const voices = useRef(null);
-
     const [text, setText] = useState('');
-    const [lang, setLang] = useState('en-EN');
-    const [voiceURI, setVoiceURI] = useState(null);
-    const [volume, setVolume] = useState(1);
     const [rate, setRate] = useState(1);
     const [pitch, setPitch] = useState(1);
 
     const utterance = new SpeechSynthesisUtterance();
+
     const voicesAvailable = speechSynthesis.getVoices();
 
-    utterance.text = text;
-    utterance.lang = lang;
-    utterance.rate = rate;
-    utterance.voiceURI = voiceURI;
-    utterance.volume = volume;
-    utterance.pitch = pitch;
-
-    if (window.SpeechSynthesisUtterance === undefined) {
+    if (window.SpeechSynthesisUtterance === undefined && !voicesAvailable) {
         compatibility.current = false;
     } else {
         compatibility.current = true;
@@ -43,7 +33,7 @@ const TextReader = () => {
 
     useEffect(() => {
         injectVoices(voices.current, speechSynthesis.getVoices());
-    }, []);
+    }, [voices]);
 
     const injectVoices = (voicesElement, voices) => {
         voicesElement.innerHTML = voices
@@ -63,6 +53,40 @@ const TextReader = () => {
             .join('');
     };
 
+    const handlerSpeak = () => {
+        let selectedOption =
+            voices.current.options[voices.current.selectedIndex];
+        let selectedVoice = speechSynthesis
+            .getVoices()
+            .filter(function (voice) {
+                return (
+                    voice.voiceURI ===
+                    selectedOption.getAttribute('data-voice-uri')
+                );
+            })
+            .pop();
+
+        utterance.text = text;
+        utterance.voice = selectedVoice;
+        utterance.lang = selectedVoice.lang;
+        utterance.rate = rate;
+        utterance.pitch = pitch;
+
+        speechSynthesis.speak(utterance);
+    };
+
+    const handlerStop = () => {
+        speechSynthesis.cancel();
+    };
+
+    const handlerPause = () => {
+        speechSynthesis.pause();
+    };
+
+    const handlerContinue = () => {
+        speechSynthesis.resume();
+    };
+
     return (
         <>
             {compatibility.current ? (
@@ -75,7 +99,9 @@ const TextReader = () => {
                             <Form action="" method="get">
                                 <FormText className={classes.info}>
                                     Simple app for speech synthesis using
-                                    'React.js' and Speech Synthesis API
+                                    'React.js' and Speech Synthesis API <br />
+                                    In the Text field, write the text that you
+                                    want to play with your computer's voice
                                 </FormText>
                                 <hr className="my-2" />
                                 <FormGroup className={classes.formGroup}>
@@ -108,7 +134,7 @@ const TextReader = () => {
                                                 type="range"
                                                 id="rate"
                                                 min="0.1"
-                                                max="10"
+                                                max="2"
                                                 value={rate}
                                                 step="0.1"
                                                 onChange={(e) =>
@@ -139,36 +165,42 @@ const TextReader = () => {
 
                                 <FormGroup className={classes.buttonGroup}>
                                     <Button
+                                        disabled={!text ? true : false}
                                         type="button"
                                         id="button-speak"
                                         color="success"
                                         className={classes.button}
+                                        onClick={handlerSpeak}
                                     >
                                         Speak
                                     </Button>
                                     <Button
                                         type="button"
-                                        id="button-stop"
-                                        color="danger"
+                                        id="button-continue"
+                                        color="info"
                                         className={classes.button}
+                                        onClick={handlerContinue}
                                     >
-                                        Stop
+                                        Continue
                                     </Button>
                                     <Button
                                         type="button"
                                         id="button-pause"
                                         color="info"
                                         className={classes.button}
+                                        onClick={handlerPause}
                                     >
                                         Pause
                                     </Button>
+
                                     <Button
                                         type="button"
-                                        id="button-resume"
-                                        color="info"
+                                        id="button-stop"
+                                        color="danger"
                                         className={classes.button}
+                                        onClick={handlerStop}
                                     >
-                                        Resume
+                                        Stop
                                     </Button>
                                 </FormGroup>
                             </Form>
@@ -179,7 +211,7 @@ const TextReader = () => {
                 <Container>
                     <Row>
                         <p className={classes.unsupported}>
-                            Speech Synthesis API not supported!
+                            Speech Synthesis API Not Supported!
                         </p>
                     </Row>
                 </Container>

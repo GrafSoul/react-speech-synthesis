@@ -22,6 +22,11 @@ npm build
 yarn build
 ```
 
+## Copyright
+
+The project partially uses the code [Aurelio De Rosa]
+
 &#169; 2020 | Text Reader | [MIT licensed].
 
 [mit licensed]: https://github.com/GrafSoul/react-speech-synthesis/blob/master/LICENSE
+[aurelio de rosa]: https://www.audero.it
