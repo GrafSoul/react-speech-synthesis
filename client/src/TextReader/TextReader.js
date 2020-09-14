@@ -102,6 +102,26 @@ const TextReader = () => {
         setIsPaused(false);
     };
 
+    const handlerVoice = () => {
+        speechSynthesis.cancel();
+        setIsPaused(false);
+        setIsSpeak(true);
+    };
+
+    const handlerRate = (e) => {
+        setRate(e.target.value);
+        speechSynthesis.cancel();
+        setIsPaused(false);
+        setIsSpeak(true);
+    };
+
+    const handlerPitch = (e) => {
+        setPitch(e.target.value);
+        speechSynthesis.cancel();
+        setIsPaused(false);
+        setIsSpeak(true);
+    };
+
     return (
         <>
             {compatibility.current ? (
@@ -135,6 +155,7 @@ const TextReader = () => {
                                         className="form-control"
                                         id="voice"
                                         ref={voices}
+                                        onChange={handlerVoice}
                                     ></select>
                                 </FormGroup>
                                 <Row form className={classes.formGroup}>
@@ -152,9 +173,7 @@ const TextReader = () => {
                                                 max="2"
                                                 value={rate}
                                                 step="0.1"
-                                                onChange={(e) =>
-                                                    setRate(e.target.value)
-                                                }
+                                                onChange={(e) => handlerRate(e)}
                                             />
                                         </FormGroup>
                                     </Col>
@@ -173,7 +192,7 @@ const TextReader = () => {
                                                 value={pitch}
                                                 step="0.1"
                                                 onChange={(e) =>
-                                                    setPitch(e.target.value)
+                                                    handlerPitch(e)
                                                 }
                                             />
                                         </FormGroup>
