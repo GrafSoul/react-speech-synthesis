@@ -108,7 +108,7 @@ const TextReader = () => {
                 <Container className={classes.content}>
                     <div className={classes.contentWrap}>
                         <h1 className={classes.title}>
-                            Text Reader | Speech Synthesis API
+                            READ.OK | Speech Synthesis API
                         </h1>
                         <Jumbotron className={classes.jumbotron}>
                             <Form action="" method="get">

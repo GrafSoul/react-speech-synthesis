@@ -1,4 +1,4 @@
-# Text Reader
+# READ.OK | Speech Synthesis API
 
 Simple app for speech synthesis using 'React.js' and Speech Synthesis API
 
@@ -26,7 +26,7 @@ yarn build
 
 The project partially uses the code [Aurelio De Rosa]
 
-&#169; 2020 | Text Reader | [MIT licensed].
+&#169; 2020 | READ.OK | [MIT licensed].
 
 [mit licensed]: https://github.com/GrafSoul/react-speech-synthesis/blob/master/LICENSE
 [aurelio de rosa]: https://www.audero.it

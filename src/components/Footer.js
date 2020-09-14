@@ -6,7 +6,7 @@ const Footer = () => {
     return (
         <footer className={classes.footer}>
             <p>
-                © 2020 | Text Reader | Created by Dmitriy Zatulovskiy |{' '}
+                © 2020 | READ.OK | Created by Dmitriy Zatulovskiy |{' '}
                 <a
                     href="https://github.com/GrafSoul/react-speech-synthesis"
                     target="_blank"
