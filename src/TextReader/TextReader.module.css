@@ -6,11 +6,12 @@ body {
 .content {
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.content-wrap {
+.contentWrap {
   padding: 20px;
 }
 
@@ -22,22 +23,24 @@ body {
   box-shadow: 1px 1px 12px rgba(0, 0, 0, 0.5);
 }
 
-h1 {
+.title {
+  text-align: center;
   font-size: 1.8em;
   text-align: center;
   margin-bottom: 20px;
+  color: azure;
 }
 
 .info {
   text-align: center;
-  margin: 10px 0;
+  margin: 0 0 10px;
 }
 
-.form-group {
+.formGroup {
   margin-bottom: 10px;
 }
 
-.input-text {
+.inputText {
   min-height: 200px;
 }
 
@@ -45,6 +48,6 @@ h1 {
   margin: 0 5px;
 }
 
-.button-group {
+.buttonGroup {
   text-align: center;
 }
