@@ -21,6 +21,9 @@ const TextReader = () => {
     const [rate, setRate] = useState(1);
     const [pitch, setPitch] = useState(1);
 
+    const [isPaused, setIsPaused] = useState(true);
+    const [isSpeak, setIsSpeak] = useState(true);
+
     const utterance = new SpeechSynthesisUtterance();
 
     const voicesAvailable = speechSynthesis.getVoices();
@@ -34,6 +37,12 @@ const TextReader = () => {
     useEffect(() => {
         injectVoices(voices.current, speechSynthesis.getVoices());
     }, [voices]);
+
+    useEffect(() => {
+        if (text === '') {
+            setIsSpeak(true);
+        }
+    }, [text]);
 
     const injectVoices = (voicesElement, voices) => {
         voicesElement.innerHTML = voices
@@ -73,18 +82,24 @@ const TextReader = () => {
         utterance.pitch = pitch;
 
         speechSynthesis.speak(utterance);
+        setIsPaused(false);
+        setIsSpeak(false);
     };
 
     const handlerStop = () => {
         speechSynthesis.cancel();
+        setIsPaused(false);
+        setIsSpeak(true);
     };
 
     const handlerPause = () => {
         speechSynthesis.pause();
+        setIsPaused(true);
     };
 
     const handlerContinue = () => {
         speechSynthesis.resume();
+        setIsPaused(false);
     };
 
     return (
@@ -100,12 +115,10 @@ const TextReader = () => {
                                 <FormText className={classes.info}>
                                     Simple app for speech synthesis using
                                     'React.js' and Speech Synthesis API <br />
-                                    In the Text field, write the text that you
+                                    In the text field, write the text that you
                                     want to play with your computer's voice
                                 </FormText>
-                                <hr className="my-2" />
                                 <FormGroup className={classes.formGroup}>
-                                    <Label for="text">Text:</Label>
                                     <Input
                                         type="textarea"
                                         id="text"
@@ -126,7 +139,9 @@ const TextReader = () => {
                                 </FormGroup>
                                 <Row form className={classes.formGroup}>
                                     <Col md={6}>
-                                        <FormGroup>
+                                        <FormGroup
+                                            className={classes.rangeInput}
+                                        >
                                             <Label for="rate">
                                                 Rate: <b>{rate}</b>
                                             </Label>
@@ -144,7 +159,9 @@ const TextReader = () => {
                                         </FormGroup>
                                     </Col>
                                     <Col md={6}>
-                                        <FormGroup>
+                                        <FormGroup
+                                            className={classes.rangeInput}
+                                        >
                                             <Label for="pitch">
                                                 Pitch: <b>{pitch}</b>
                                             </Label>
@@ -164,43 +181,50 @@ const TextReader = () => {
                                 </Row>
 
                                 <FormGroup className={classes.buttonGroup}>
+                                    {isSpeak ? (
+                                        <Button
+                                            disabled={!text ? true : false}
+                                            type="button"
+                                            id="button-speak"
+                                            color="success"
+                                            className={classes.button}
+                                            onClick={handlerSpeak}
+                                        >
+                                            <i className="fas fa-play"></i>{' '}
+                                            Speak
+                                        </Button>
+                                    ) : (
+                                        <Button
+                                            type="button"
+                                            id="button-continue"
+                                            color="info"
+                                            className={classes.button}
+                                            onClick={handlerContinue}
+                                        >
+                                            <i className="fas fa-play"></i>{' '}
+                                            Speak
+                                        </Button>
+                                    )}
                                     <Button
-                                        disabled={!text ? true : false}
-                                        type="button"
-                                        id="button-speak"
-                                        color="success"
-                                        className={classes.button}
-                                        onClick={handlerSpeak}
-                                    >
-                                        Speak
-                                    </Button>
-                                    <Button
-                                        type="button"
-                                        id="button-continue"
-                                        color="info"
-                                        className={classes.button}
-                                        onClick={handlerContinue}
-                                    >
-                                        Continue
-                                    </Button>
-                                    <Button
+                                        disabled={!isPaused ? false : true}
                                         type="button"
                                         id="button-pause"
                                         color="info"
                                         className={classes.button}
                                         onClick={handlerPause}
                                     >
-                                        Pause
+                                        <i className="fas fa-pause"></i> Pause
                                     </Button>
 
                                     <Button
+                                        disabled={!text ? true : false}
                                         type="button"
                                         id="button-stop"
                                         color="danger"
                                         className={classes.button}
                                         onClick={handlerStop}
                                     >
-                                        Stop
+                                        <i className="fas fa-stop"></i> Stop
                                     </Button>
                                 </FormGroup>
                             </Form>
