@@ -1,11 +1,13 @@
 import React from 'react';
 
 import TextReader from './TextReader/TextReader';
-import Footer from './components/Footer';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
 
 const App = () => {
     return (
         <>
+            <Header />
             <TextReader />
             <Footer />
         </>

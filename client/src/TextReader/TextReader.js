@@ -141,9 +141,6 @@ const TextReader = () => {
                         onClick={(e) => handler(e)}
                     ></div>
                     <div className={classes.contentWrap}>
-                        <h1 className={classes.title}>
-                            READ.OK | Speech Synthesis API
-                        </h1>
                         <Jumbotron className={classes.jumbotron}>
                             <Form action="" method="get">
                                 <FormText className={classes.info}>
