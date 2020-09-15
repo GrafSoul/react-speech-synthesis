@@ -145,7 +145,7 @@ const TextReader = () => {
                             <Form action="" method="get">
                                 <FormText className={classes.info}>
                                     Simple app for speech synthesis using
-                                    'React.js' and Speech Synthesis API <br />
+                                    React.js and Speech Synthesis API <br />
                                     In the text field, write the text that you
                                     want to play with your computer's voice
                                 </FormText>
