@@ -3,6 +3,14 @@ body {
   background-color: #003b3d;
 }
 
+input:focus,
+button:focus,
+textarea:focus,
+select:focus {
+  border-color: #ced4da !important;
+  box-shadow: none !important;
+}
+
 .content {
   height: 100vh;
   display: flex;
@@ -14,11 +22,19 @@ body {
   padding: 20px;
 }
 
+.curtainBlocked {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+}
+
 .jumbotron {
   margin: auto;
   padding-top: 25px;
   padding-bottom: 25px;
-
   box-shadow: 1px 1px 12px rgba(0, 0, 0, 0.5);
 }
 
@@ -37,10 +53,23 @@ body {
 
 .formGroup {
   margin-bottom: 10px;
+  position: relative;
+}
+
+.textareaBlocked {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(255, 200, 0, 0.2);
+  z-index: 50;
 }
 
 .inputText {
+  height: 400px;
   min-height: 200px;
+  max-height: 450px;
 }
 
 .rangeInput {
@@ -54,6 +83,8 @@ body {
 
 button {
   outline: none;
+  position: relative;
+  z-index: 150;
 }
 
 .buttonGroup {

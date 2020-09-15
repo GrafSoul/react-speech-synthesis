@@ -17,6 +17,7 @@ import classes from './TextReader.module.css';
 const TextReader = () => {
     const compatibility = useRef(true);
     const voices = useRef(null);
+
     const [text, setText] = useState('');
     const [rate, setRate] = useState(1);
     const [pitch, setPitch] = useState(1);
@@ -25,7 +26,6 @@ const TextReader = () => {
     const [isSpeak, setIsSpeak] = useState(true);
 
     const utterance = new SpeechSynthesisUtterance();
-
     const voicesAvailable = speechSynthesis.getVoices();
 
     if (window.SpeechSynthesisUtterance === undefined && !voicesAvailable) {
@@ -37,12 +37,6 @@ const TextReader = () => {
     useEffect(() => {
         injectVoices(voices.current, speechSynthesis.getVoices());
     }, [voices]);
-
-    useEffect(() => {
-        if (text === '') {
-            setIsSpeak(true);
-        }
-    }, [text]);
 
     const injectVoices = (voicesElement, voices) => {
         voicesElement.innerHTML = voices
@@ -122,10 +116,30 @@ const TextReader = () => {
         setIsSpeak(true);
     };
 
+    const handlerText = (e) => {
+        setText(e.target.value);
+        if (text === '') {
+            setIsSpeak(true);
+        }
+        speechSynthesis.cancel();
+        setIsPaused(false);
+        setIsSpeak(true);
+    };
+
+    function handler(e) {
+        speechSynthesis.cancel();
+        setIsPaused(false);
+        setIsSpeak(true);
+    }
+
     return (
         <>
             {compatibility.current ? (
                 <Container className={classes.content}>
+                    <div
+                        className={isSpeak ? null : classes.curtainBlocked}
+                        onClick={(e) => handler(e)}
+                    ></div>
                     <div className={classes.contentWrap}>
                         <h1 className={classes.title}>
                             READ.OK | Speech Synthesis API
@@ -139,14 +153,21 @@ const TextReader = () => {
                                     want to play with your computer's voice
                                 </FormText>
                                 <FormGroup className={classes.formGroup}>
+                                    <div
+                                        className={
+                                            isSpeak
+                                                ? null
+                                                : classes.textareaBlocked
+                                        }
+                                    ></div>
                                     <Input
+                                        disabled={isSpeak ? false : true}
                                         type="textarea"
                                         id="text"
                                         className={classes.inputText}
                                         value={text}
-                                        onChange={(e) =>
-                                            setText(e.target.value)
-                                        }
+                                        onChange={(e) => handlerText(e)}
+                                        onClick={(e) => handler(e)}
                                     ></Input>
                                 </FormGroup>
                                 <FormGroup className={classes.formGroup}>
