@@ -2,6 +2,10 @@
 
 Simple app for speech synthesis using 'React.js' and Speech Synthesis API
 
+## Demo
+
+[GitHub] and Heroku - [READ.OK]
+
 ## Run for start development version
 
 ```
@@ -30,3 +34,5 @@ The project partially uses the code [Aurelio De Rosa]
 
 [mit licensed]: https://github.com/GrafSoul/react-speech-synthesis/blob/master/LICENSE
 [aurelio de rosa]: https://www.audero.it
+[read.ok]: https://readok.herokuapp.com/
+[github]: https://grafsoul.github.io/react-speech-synthesis/
