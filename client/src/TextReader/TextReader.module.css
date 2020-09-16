@@ -35,7 +35,7 @@ select:focus {
 .jumbotron {
   margin: auto;
   padding-top: 25px;
-  padding-bottom: 25px;
+  padding-bottom: 10px;
   box-shadow: 1px 1px 12px rgba(0, 0, 0, 0.5);
 }
 
@@ -66,7 +66,7 @@ select:focus {
 }
 
 .button {
-  margin: 0 5px;
+  margin: 0 5px 10px;
   outline: none;
 }
 

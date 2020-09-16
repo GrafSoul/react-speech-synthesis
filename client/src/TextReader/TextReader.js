@@ -27,6 +27,7 @@ const TextReader = () => {
     const [text, setText] = useState('');
     const [rate, setRate] = useState(1);
     const [pitch, setPitch] = useState(1);
+    const [volume, setVolume] = useState(1);
 
     const [isPaused, setIsPaused] = useState(true);
     const [isSpeak, setIsSpeak] = useState(true);
@@ -85,6 +86,7 @@ const TextReader = () => {
         utterance.lang = selectedVoice.lang;
         utterance.rate = rate;
         utterance.pitch = pitch;
+        utterance.volume = volume;
 
         utterance.onboundary = function (e) {
             let word = getWordAt(text, e.charIndex);
@@ -142,6 +144,11 @@ const TextReader = () => {
 
     const handlerPitch = (e) => {
         setPitch(e.target.value);
+        handlerStop();
+    };
+
+    const handlerVolume = (e) => {
+        setVolume(e.target.value);
         handlerStop();
     };
 
@@ -247,7 +254,7 @@ const TextReader = () => {
                                     ></select>
                                 </FormGroup>
                                 <Row form className={classes.formGroup}>
-                                    <Col md={6}>
+                                    <Col md={4}>
                                         <FormGroup
                                             className={classes.rangeInput}
                                         >
@@ -265,7 +272,7 @@ const TextReader = () => {
                                             />
                                         </FormGroup>
                                     </Col>
-                                    <Col md={6}>
+                                    <Col md={4}>
                                         <FormGroup
                                             className={classes.rangeInput}
                                         >
@@ -281,6 +288,26 @@ const TextReader = () => {
                                                 step="0.1"
                                                 onChange={(e) =>
                                                     handlerPitch(e)
+                                                }
+                                            />
+                                        </FormGroup>
+                                    </Col>
+                                    <Col md={4}>
+                                        <FormGroup
+                                            className={classes.rangeInput}
+                                        >
+                                            <Label for="pitch">
+                                                Volume: <b>{volume}</b>
+                                            </Label>
+                                            <Input
+                                                type="range"
+                                                id="volume"
+                                                min="0.1"
+                                                max="2"
+                                                value={volume}
+                                                step="0.1"
+                                                onChange={(e) =>
+                                                    handlerVolume(e)
                                                 }
                                             />
                                         </FormGroup>
