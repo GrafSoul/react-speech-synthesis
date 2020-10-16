@@ -31,14 +31,24 @@ const TextReader = () => {
 
     const [isPaused, setIsPaused] = useState(true);
     const [isSpeak, setIsSpeak] = useState(true);
+    const [isRecord, setIsRecord] = useState(false);
+
 
     const utterance = new SpeechSynthesisUtterance();
     const voicesAvailable = speechSynthesis.getVoices();
 
     // eslint-disable-next-line no-undef
-    const recognition = new webkitSpeechRecognition();
-    recognition.continuous = true;
-    // recognition.interimResults = true;
+    const recognition = useRef(null)
+
+
+    useEffect(() => {
+        // eslint-disable-next-line no-undef
+        recognition.current = new webkitSpeechRecognition();
+        recognition.current.continuous = true;
+        recognition.current.interimResults = true;
+
+    },[recognition])
+
 
     if (window.SpeechSynthesisUtterance === undefined && !voicesAvailable) {
         compatibility.current = false;
@@ -170,22 +180,24 @@ const TextReader = () => {
         handlerStop();
     };
 
-    const handlerRecord = () => {
-		recognition.onresult = (event) =>{ 
-			console.log(event);
-			const output = document.getElementById("output");
-			output.innerHTML = "";
-			for(var i=0; i<event.results.length; i++){
-				output.innerHTML = output.innerHTML + event.results[i][0].transcript;
-			}
-		}
-		recognition.start();
-    } 
+    const handlerToggleRecord = () => {
+        console.log(recognition.current);
+        if(!isRecord){
+            recognition.current.onresult = (event) =>{ 
+                const output = document.getElementById("output");
+                output.innerHTML = "";
+                for(var i=0; i<event.results.length; i++){
+                    output.innerHTML = output.innerHTML + event.results[i][0].transcript;
+                }
+            }
+            recognition.current.start();
+            setIsRecord(true);
+        }else{
+            recognition.current.stop();
+            setIsRecord(false);
+        }
+    }  
     
-    const handlerStopRecord = () => {
-		recognition.stop();
-	} 
-
     const getWordAt = (str, pos) => {
         str = String(str);
         pos = Number(pos) >>> 0;
@@ -398,23 +410,12 @@ const TextReader = () => {
                                         disabled={text ? true : false}
                                         type="button"
                                         id="button-clear"
-                                        color="danger"
-                                        className={classes.button}
-                                        onClick={handlerRecord}
+                                        color={isRecord ? 'danger' : 'success'}
+                                        className={[classes.button, isRecord ? classes.blink: null].join(' ')}
+                                        onClick={handlerToggleRecord}
                                     >
                                         <i className="fas fa-microphone-alt"></i>{' '}
                                         Record
-                                    </Button>
-                                    <Button
-                                        disabled={text ? true : false}
-                                        type="button"
-                                        id="button-clear"
-                                        color="danger"
-                                        className={classes.button}
-                                        onClick={handlerStopRecord}
-                                    >
-                                        <i className="fas fa-microphone-alt"></i>{' '}
-                                        Stop Record
                                     </Button>
                                 </FormGroup>
                             </Form>
