@@ -121,6 +121,7 @@ button {
 }
 
 .blink {
+  cursor: pointer;
   animation-name: blinker;
   animation-iteration-count: infinite;
   animation-timing-function: cubic-bezier(1.0,0,0,1.0);

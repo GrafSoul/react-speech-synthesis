@@ -6,7 +6,7 @@ const Header = () => {
     return (
         <header className={classes.header}>
             <div className={classes.headerWrap}>
-                <h1>READ.OK | Speech Synthesis API</h1>
+                <h1>READ.OK | Web Speech API</h1>
             </div>
         </header>
     );

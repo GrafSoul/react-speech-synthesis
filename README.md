@@ -1,4 +1,4 @@
-# READ.OK | Speech Synthesis API
+# READ.OK | Web Speech API
 
 Simple app for speech synthesis using React.js and Speech Synthesis API
 
